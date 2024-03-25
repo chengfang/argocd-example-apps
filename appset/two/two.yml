@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guestbook-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guestbook-2
+  template:
+    metadata:
+      labels:
+        app: guestbook-2
+    spec:
+      containers:
+        - name: guestbook-2
+          image: tomcat
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: guestbook-2
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: guestbook-2
